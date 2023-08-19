@@ -58,6 +58,7 @@ class ProductManager {
 }
 
 const productManager = new ProductManager('products.json');
+module.exports = ProductManager;
 
 productManager.addProduct({
   title: 'Producto 1',
@@ -71,6 +72,14 @@ productManager.addProduct({
 productManager.addProduct({
   title: 'Producto 2',
   description: 'Descripción del producto 2',
+  price: 19.99,
+  thumbnail: 'path/to/thumbnail2.jpg',
+  code: 'P456',
+  stock: 30
+});
+productManager.addProduct({
+  title: 'Producto 3',
+  description: 'Descripción del producto 3',
   price: 19.99,
   thumbnail: 'path/to/thumbnail2.jpg',
   code: 'P456',
