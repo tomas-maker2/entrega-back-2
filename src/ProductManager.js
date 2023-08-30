@@ -1,9 +1,10 @@
-const fs = require('fs');
+import fs from 'fs';
 
 class ProductManager {
-  constructor(path) {
+  constructor(path, io) {
     this.path = path;
     this.products = [];
+    this.io = io; // Asegúrate de pasar io al constructor
     this.loadProducts();
   }
 
@@ -25,6 +26,7 @@ class ProductManager {
     const newProduct = { id, ...product };
     this.products.push(newProduct);
     this.saveProducts();
+    
     return newProduct;
   }
 
@@ -51,44 +53,11 @@ class ProductManager {
     if (productIndex !== -1) {
       const deletedProduct = this.products.splice(productIndex, 1)[0];
       this.saveProducts();
+      
       return deletedProduct;
     }
     return null;
   }
 }
 
-const productManager = new ProductManager('products.json');
-module.exports = ProductManager;
-
-productManager.addProduct({
-  title: 'Producto 1',
-  description: 'Descripción del producto 1',
-  price: 10.99,
-  thumbnail: 'path/to/thumbnail1.jpg',
-  code: 'P123',
-  stock: 50
-});
-
-productManager.addProduct({
-  title: 'Producto 2',
-  description: 'Descripción del producto 2',
-  price: 19.99,
-  thumbnail: 'path/to/thumbnail2.jpg',
-  code: 'P456',
-  stock: 30
-});
-productManager.addProduct({
-  title: 'Producto 3',
-  description: 'Descripción del producto 3',
-  price: 19.99,
-  thumbnail: 'path/to/thumbnail2.jpg',
-  code: 'P456',
-  stock: 30
-});
-
-console.log(productManager.getProducts());
-console.log(productManager.getProductById(1));
-productManager.updateProduct(1, { price: 12.99 });
-console.log(productManager.getProducts());
-console.log(productManager.deleteProduct(2));
-console.log(productManager.getProducts());
+export default ProductManager;

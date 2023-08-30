@@ -1,7 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const fs = require('fs');
+import express from 'express';
+import fs from 'fs';
 
+const router = express.Router();
 const cartsFile = 'carrito.json';
 
 function readJSONFile(filename) {
@@ -65,4 +65,4 @@ router.post('/:cid/product/:pid', (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;
