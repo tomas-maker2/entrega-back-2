@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat</title>
+</head>
+<body>
+  <h1>Chat en Tiempo Real</h1>
+  
+  <div id="chat-container">
+    <div id="chat-messages"></div>
+    <div id="chat-input">
+      <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+      <button id="send-button">Enviar</button>
+    </div>
+  </div>
+  
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+    const chatMessages = document.getElementById('chat-messages');
+    const messageInput = document.getElementById('message-input');
+    const sendButton = document.getElementById('send-button');
+
+    // Función para agregar un mensaje al chat
+    function addMessage(user, message) {
+      const messageElement = document.createElement('div');
+      messageElement.innerHTML = `<strong>${user}:</strong> ${message}`;
+      chatMessages.appendChild(messageElement);
+    }
+
+    // Escuchar eventos de mensajes nuevos
+    socket.on('newMessage', (data) => {
+      addMessage(data.user, data.message);
+    });
+
+    // Enviar un mensaje al servidor cuando se presiona "Enviar"
+    sendButton.addEventListener('click', () => {
+      const user = 'Usuario'; 
+      const message = messageInput.value;
+      socket.emit('sendMessage', { user, message });
+      messageInput.value = '';
+    });
+  </script>
+</body>
+</html>
