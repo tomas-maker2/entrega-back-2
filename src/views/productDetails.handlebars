@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Detalles del Producto</title>
+</head>
+<body>
+  <h1>Detalles del Producto</h1>
+  <h2>{{product.title}}</h2>
+  <p>{{product.description}}</p>
+  <p>Precio: ${{product.price}}</p>
+  <p>Categoría: {{product.category}}</p>
+  <p>Disponibilidad: {{#if product.stock}}Disponible{{else}}No disponible{{/if}}</p>
+  <button onclick="addToCart('{{product._id}}')">Agregar al Carrito</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+     function addToCart(productId) {
+      // Preparar los datos a enviar en la solicitud AJAX
+      const productData = {
+        productId: productId,
+        quantity: 1, // Puedes ajustar la cantidad según tus necesidades
+      };
+
+      // Realizar la solicitud POST al endpoint del carrito para agregar el producto
+      $.ajax({
+        type: 'POST',
+        url: `/api/carts/${cartId}/products`, // Reemplaza 'cartId' con el ID del carrito actual
+        data: JSON.stringify(productData),
+        contentType: 'application/json',
+        success: function (response) {
+          // Manejar la respuesta del servidor
+          if (response.status === 'success') {
+            alert('Producto agregado al carrito exitosamente.');
+          } else {
+            alert('Error al agregar el producto al carrito.');
+          }
+        },
+        error: function (error) {
+          console.error('Error al realizar la solicitud AJAX:', error);
+        },
+      });
+    }
+  </script>
+</body>
+</html>

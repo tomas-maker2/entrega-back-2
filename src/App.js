@@ -8,13 +8,15 @@ import ProductManager from './dao/mongo/ProductManager.js'; // Importa ProductMa
 import mongoose from 'mongoose';
 
 
-mongoose.connect('mongodb+srv://tomasmaker2:topper10@cluster0.na8mlhz.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://tomasmaker2:topper10@cluster0.na8mlhz.mongodb.net/?retryWrites=true&w=majority', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 const port = 8080;
 const httpServer = http.createServer(app); // Crea el servidor HTTP
 const io = new Server(httpServer); // Crea la instancia de io
-const productManager = new ProductManager('productos.json', io); // Pasa io al constructor
 
 app.engine('handlebars', handlebars.engine());
 app.set('view engine', 'handlebars');
